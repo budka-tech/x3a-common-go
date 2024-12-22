@@ -31,7 +31,7 @@ const (
 type CCClient interface {
 	// Получение монет(ы)
 	GetCoins(ctx context.Context, in *GetCoinsParams, opts ...grpc.CallOption) (*GetCoinsResponse, error)
-	GetCoin(ctx context.Context, in *GetCoinsParams, opts ...grpc.CallOption) (*GetCoinResponse, error)
+	GetCoin(ctx context.Context, in *GetCoinParams, opts ...grpc.CallOption) (*GetCoinResponse, error)
 	// Получение текущих значений монеты
 	GetValuesPerDay(ctx context.Context, in *GetValuesPerDayParams, opts ...grpc.CallOption) (*GetValuesPerDayResponse, error)
 	GetValuesPerDays(ctx context.Context, in *GetValuesPerDaysParams, opts ...grpc.CallOption) (*GetValuesPerDaysResponse, error)
@@ -55,7 +55,7 @@ func (c *cCClient) GetCoins(ctx context.Context, in *GetCoinsParams, opts ...grp
 	return out, nil
 }
 
-func (c *cCClient) GetCoin(ctx context.Context, in *GetCoinsParams, opts ...grpc.CallOption) (*GetCoinResponse, error) {
+func (c *cCClient) GetCoin(ctx context.Context, in *GetCoinParams, opts ...grpc.CallOption) (*GetCoinResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetCoinResponse)
 	err := c.cc.Invoke(ctx, CC_GetCoin_FullMethodName, in, out, cOpts...)
@@ -91,7 +91,7 @@ func (c *cCClient) GetValuesPerDays(ctx context.Context, in *GetValuesPerDaysPar
 type CCServer interface {
 	// Получение монет(ы)
 	GetCoins(context.Context, *GetCoinsParams) (*GetCoinsResponse, error)
-	GetCoin(context.Context, *GetCoinsParams) (*GetCoinResponse, error)
+	GetCoin(context.Context, *GetCoinParams) (*GetCoinResponse, error)
 	// Получение текущих значений монеты
 	GetValuesPerDay(context.Context, *GetValuesPerDayParams) (*GetValuesPerDayResponse, error)
 	GetValuesPerDays(context.Context, *GetValuesPerDaysParams) (*GetValuesPerDaysResponse, error)
@@ -108,7 +108,7 @@ type UnimplementedCCServer struct{}
 func (UnimplementedCCServer) GetCoins(context.Context, *GetCoinsParams) (*GetCoinsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCoins not implemented")
 }
-func (UnimplementedCCServer) GetCoin(context.Context, *GetCoinsParams) (*GetCoinResponse, error) {
+func (UnimplementedCCServer) GetCoin(context.Context, *GetCoinParams) (*GetCoinResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCoin not implemented")
 }
 func (UnimplementedCCServer) GetValuesPerDay(context.Context, *GetValuesPerDayParams) (*GetValuesPerDayResponse, error) {
@@ -157,7 +157,7 @@ func _CC_GetCoins_Handler(srv interface{}, ctx context.Context, dec func(interfa
 }
 
 func _CC_GetCoin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetCoinsParams)
+	in := new(GetCoinParams)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -169,7 +169,7 @@ func _CC_GetCoin_Handler(srv interface{}, ctx context.Context, dec func(interfac
 		FullMethod: CC_GetCoin_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CCServer).GetCoin(ctx, req.(*GetCoinsParams))
+		return srv.(CCServer).GetCoin(ctx, req.(*GetCoinParams))
 	}
 	return interceptor(ctx, in, info, handler)
 }

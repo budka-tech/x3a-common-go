@@ -1,4 +1,4 @@
-module github.com/budka-tech/snip-common-go
+module github.com/budka-tech/x3a-common-go
 
 go 1.23.1
 
@@ -7,6 +7,7 @@ toolchain go1.23.3
 require (
 	github.com/budka-tech/envo v0.0.2
 	github.com/budka-tech/logit-go v0.1.7
+	github.com/budka-tech/snip-common-go v0.0.62
 	github.com/redis/go-redis/v9 v9.7.0
 	google.golang.org/grpc v1.66.2
 	google.golang.org/protobuf v1.34.2

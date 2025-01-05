@@ -19,18 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	News_Init_FullMethodName              = "/assist.News/Init"
-	News_GetArticles_FullMethodName       = "/assist.News/GetArticles"
-	News_GetArticle_FullMethodName        = "/assist.News/GetArticle"
-	News_GetArticleContent_FullMethodName = "/assist.News/GetArticleContent"
-	News_GetFilters_FullMethodName        = "/assist.News/GetFilters"
-	News_CreateFilter_FullMethodName      = "/assist.News/CreateFilter"
-	News_UpdateFilter_FullMethodName      = "/assist.News/UpdateFilter"
-	News_DeleteFilter_FullMethodName      = "/assist.News/DeleteFilter"
-	News_GetTags_FullMethodName           = "/assist.News/GetTags"
-	News_GetSources_FullMethodName        = "/assist.News/GetSources"
-	News_GetFavorites_FullMethodName      = "/assist.News/GetFavorites"
-	News_SetFavorite_FullMethodName       = "/assist.News/SetFavorite"
+	News_Init_FullMethodName              = "/news.News/Init"
+	News_GetArticles_FullMethodName       = "/news.News/GetArticles"
+	News_GetArticle_FullMethodName        = "/news.News/GetArticle"
+	News_GetArticleContent_FullMethodName = "/news.News/GetArticleContent"
+	News_GetFilters_FullMethodName        = "/news.News/GetFilters"
+	News_CreateFilter_FullMethodName      = "/news.News/CreateFilter"
+	News_UpdateFilter_FullMethodName      = "/news.News/UpdateFilter"
+	News_DeleteFilter_FullMethodName      = "/news.News/DeleteFilter"
+	News_GetTags_FullMethodName           = "/news.News/GetTags"
+	News_GetSources_FullMethodName        = "/news.News/GetSources"
+	News_GetFavorites_FullMethodName      = "/news.News/GetFavorites"
+	News_SetFavorite_FullMethodName       = "/news.News/SetFavorite"
 )
 
 // NewsClient is the client API for News service.
@@ -482,7 +482,7 @@ func _News_SetFavorite_Handler(srv interface{}, ctx context.Context, dec func(in
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var News_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "assist.News",
+	ServiceName: "news.News",
 	HandlerType: (*NewsServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

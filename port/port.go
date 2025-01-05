@@ -10,8 +10,11 @@ type Port = uint16
 const (
 	Redis      Port = 6379
 	UsersGrpc       = 10100
-	CCGrpc       = 10100
-	S3Grpc          = 10500
+	CCGrpc          = 10200
+	NOGrpc          = 10300
+	NewsGrpc        = 10400
+	SearchGrpc      = 10500
+	S3Grpc          = 10600
 )
 
 type ServiceName string
@@ -19,18 +22,20 @@ type ServiceName string
 const (
 	ServiceUsers  ServiceName = "x3a-users-service"
 	ServiceRedis              = "x3a-redis-service"
-	ServiceGsm                = "x3a-gsm-service"
-	ServicePush               = "x3a-push-service"
-	ServiceAssist             = "x3a-assist-service"
+	ServiceCC                 = "x3a-cc-service"
+	ServiceNO                 = "x3a-no-service"
+	ServiceNews               = "x3a-news-service"
+	ServiceSearch             = "x3a-search-service"
 	ServiceS3G                = "x3a-s3-service"
 )
 
 var m = map[ServiceName]Port{
 	ServiceUsers:  UsersGrpc,
 	ServiceRedis:  Redis,
-	ServiceGsm:    GsmGrpc,
-	ServicePush:   PushGrpc,
-	ServiceAssist: AssistGrpc,
+	ServiceCC:     CCGrpc,
+	ServiceNO:     NOGrpc,
+	ServiceNews:   NewsGrpc,
+	ServiceSearch: SearchGrpc,
 	ServiceS3G:    S3Grpc,
 }
 

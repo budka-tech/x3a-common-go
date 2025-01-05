@@ -20,103 +20,139 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	NO_UploadArticle_FullMethodName = "/assist.NO/UploadArticle"
+	No_UploadArticles_FullMethodName = "/no.No/UploadArticles"
+	No_AddSources_FullMethodName     = "/no.No/AddSources"
 )
 
-// NOClient is the client API for NO service.
+// NoClient is the client API for No service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type NOClient interface {
-	// Получение монет(ы)
-	UploadArticle(ctx context.Context, in *UploadArticleParams, opts ...grpc.CallOption) (*common.Response, error)
+type NoClient interface {
+	UploadArticles(ctx context.Context, in *UploadArticlesParams, opts ...grpc.CallOption) (*common.Response, error)
+	AddSources(ctx context.Context, in *AddSourcesParams, opts ...grpc.CallOption) (*common.Response, error)
 }
 
-type nOClient struct {
+type noClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewNOClient(cc grpc.ClientConnInterface) NOClient {
-	return &nOClient{cc}
+func NewNoClient(cc grpc.ClientConnInterface) NoClient {
+	return &noClient{cc}
 }
 
-func (c *nOClient) UploadArticle(ctx context.Context, in *UploadArticleParams, opts ...grpc.CallOption) (*common.Response, error) {
+func (c *noClient) UploadArticles(ctx context.Context, in *UploadArticlesParams, opts ...grpc.CallOption) (*common.Response, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(common.Response)
-	err := c.cc.Invoke(ctx, NO_UploadArticle_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, No_UploadArticles_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// NOServer is the server API for NO service.
-// All implementations must embed UnimplementedNOServer
-// for forward compatibility.
-type NOServer interface {
-	// Получение монет(ы)
-	UploadArticle(context.Context, *UploadArticleParams) (*common.Response, error)
-	mustEmbedUnimplementedNOServer()
+func (c *noClient) AddSources(ctx context.Context, in *AddSourcesParams, opts ...grpc.CallOption) (*common.Response, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(common.Response)
+	err := c.cc.Invoke(ctx, No_AddSources_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// UnimplementedNOServer must be embedded to have
+// NoServer is the server API for No service.
+// All implementations must embed UnimplementedNoServer
+// for forward compatibility.
+type NoServer interface {
+	UploadArticles(context.Context, *UploadArticlesParams) (*common.Response, error)
+	AddSources(context.Context, *AddSourcesParams) (*common.Response, error)
+	mustEmbedUnimplementedNoServer()
+}
+
+// UnimplementedNoServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedNOServer struct{}
+type UnimplementedNoServer struct{}
 
-func (UnimplementedNOServer) UploadArticle(context.Context, *UploadArticleParams) (*common.Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UploadArticle not implemented")
+func (UnimplementedNoServer) UploadArticles(context.Context, *UploadArticlesParams) (*common.Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadArticles not implemented")
 }
-func (UnimplementedNOServer) mustEmbedUnimplementedNOServer() {}
-func (UnimplementedNOServer) testEmbeddedByValue()            {}
+func (UnimplementedNoServer) AddSources(context.Context, *AddSourcesParams) (*common.Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddSources not implemented")
+}
+func (UnimplementedNoServer) mustEmbedUnimplementedNoServer() {}
+func (UnimplementedNoServer) testEmbeddedByValue()            {}
 
-// UnsafeNOServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to NOServer will
+// UnsafeNoServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to NoServer will
 // result in compilation errors.
-type UnsafeNOServer interface {
-	mustEmbedUnimplementedNOServer()
+type UnsafeNoServer interface {
+	mustEmbedUnimplementedNoServer()
 }
 
-func RegisterNOServer(s grpc.ServiceRegistrar, srv NOServer) {
-	// If the following call pancis, it indicates UnimplementedNOServer was
+func RegisterNoServer(s grpc.ServiceRegistrar, srv NoServer) {
+	// If the following call pancis, it indicates UnimplementedNoServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&NO_ServiceDesc, srv)
+	s.RegisterService(&No_ServiceDesc, srv)
 }
 
-func _NO_UploadArticle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UploadArticleParams)
+func _No_UploadArticles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadArticlesParams)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(NOServer).UploadArticle(ctx, in)
+		return srv.(NoServer).UploadArticles(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: NO_UploadArticle_FullMethodName,
+		FullMethod: No_UploadArticles_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NOServer).UploadArticle(ctx, req.(*UploadArticleParams))
+		return srv.(NoServer).UploadArticles(ctx, req.(*UploadArticlesParams))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// NO_ServiceDesc is the grpc.ServiceDesc for NO service.
+func _No_AddSources_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddSourcesParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NoServer).AddSources(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: No_AddSources_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NoServer).AddSources(ctx, req.(*AddSourcesParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// No_ServiceDesc is the grpc.ServiceDesc for No service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var NO_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "assist.NO",
-	HandlerType: (*NOServer)(nil),
+var No_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "no.No",
+	HandlerType: (*NoServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "UploadArticle",
-			Handler:    _NO_UploadArticle_Handler,
+			MethodName: "UploadArticles",
+			Handler:    _No_UploadArticles_Handler,
+		},
+		{
+			MethodName: "AddSources",
+			Handler:    _No_AddSources_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

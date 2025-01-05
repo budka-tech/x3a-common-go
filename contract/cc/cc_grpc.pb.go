@@ -19,11 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	CC_GetCoins_FullMethodName          = "/assist.CC/GetCoins"
-	CC_GetCoin_FullMethodName           = "/assist.CC/GetCoin"
-	CC_GetValuesPerDay_FullMethodName   = "/assist.CC/GetValuesPerDay"
-	CC_GetValuesPerWeek_FullMethodName  = "/assist.CC/GetValuesPerWeek"
-	CC_GetValuesPerMonth_FullMethodName = "/assist.CC/GetValuesPerMonth"
+	CC_GetCoins_FullMethodName          = "/cc.CC/GetCoins"
+	CC_GetCoin_FullMethodName           = "/cc.CC/GetCoin"
+	CC_GetValuesPerDay_FullMethodName   = "/cc.CC/GetValuesPerDay"
+	CC_GetValuesPerWeek_FullMethodName  = "/cc.CC/GetValuesPerWeek"
+	CC_GetValuesPerMonth_FullMethodName = "/cc.CC/GetValuesPerMonth"
 )
 
 // CCClient is the client API for CC service.
@@ -248,7 +248,7 @@ func _CC_GetValuesPerMonth_Handler(srv interface{}, ctx context.Context, dec fun
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var CC_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "assist.CC",
+	ServiceName: "cc.CC",
 	HandlerType: (*CCServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

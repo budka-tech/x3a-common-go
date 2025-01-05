@@ -8,7 +8,7 @@ package s3v1
 
 import (
 	context "context"
-	common "github.com/budka-tech/snip-common-go/contract/common"
+	common "github.com/budka-tech/x3a-common-go/contract/common"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"

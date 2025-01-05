@@ -7,7 +7,7 @@
 package nov1
 
 import (
-	common "github.com/budka-tech/snip-common-go/contract/common"
+	common "github.com/budka-tech/x3a-common-go/contract/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"

@@ -3,8 +3,8 @@ package gclient
 import (
 	"context"
 	"github.com/budka-tech/envo"
+	"github.com/budka-tech/iport"
 	"github.com/budka-tech/logit-go"
-	"github.com/budka-tech/snip-common-go/port"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/connectivity"
 	"net"
@@ -13,34 +13,37 @@ import (
 
 type GClient[T any] struct {
 	name          string
-	serviceName   port.ServiceName
+	host          iport.Host
 	listener      net.Listener
 	Cli           T
 	conn          *grpc.ClientConn
 	clientFactory func(*grpc.ClientConn) T
 	dialOptions   []grpc.DialOption
 	env           *envo.Env
+	ports         iport.Ports
 	logger        logit.Logger
 }
 
 type GClientParams[T any] struct {
 	Name          string
-	ServiceName   port.ServiceName
+	Host          iport.Host
 	ClientFactory func(*grpc.ClientConn) T
 	Env           *envo.Env
-	Logger        logit.Logger
 	DialOptions   []grpc.DialOption
+	Ports         iport.Ports
+	Logger        logit.Logger
 }
 
 // NewGClient creates a new GClient instance
 func NewGClient[T any](params *GClientParams[T]) *GClient[T] {
 	return &GClient[T]{
 		name:          params.Name,
-		serviceName:   params.ServiceName,
+		host:          params.Host,
 		clientFactory: params.ClientFactory,
 		env:           params.Env,
-		logger:        params.Logger,
 		dialOptions:   append([]grpc.DialOption{grpc.WithInsecure()}, params.DialOptions...),
+		ports:         params.Ports,
+		logger:        params.Logger,
 	}
 }
 
@@ -52,7 +55,7 @@ func (n *GClient[T]) Init(ctx context.Context) error {
 		case <-ctx.Done():
 			return ctx.Err()
 		default:
-			host := port.FormatServiceTCP(n.env, n.serviceName)
+			host := n.ports.FormatServiceTCP(n.host)
 			n.logger.Infof(ctx, "Попытка подключения к сервису %s по адресу %s", n.name, host)
 
 			conn, err := grpc.DialContext(ctx, host, n.dialOptions...)

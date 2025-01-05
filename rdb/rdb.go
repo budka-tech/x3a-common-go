@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/budka-tech/envo"
+	"github.com/budka-tech/iport"
 	"github.com/budka-tech/logit-go"
-	"github.com/budka-tech/snip-common-go/port"
 	"github.com/redis/go-redis/v9"
 	"time"
 )
@@ -15,20 +15,22 @@ const (
 	defaultPingTimeout    = 2 * time.Second
 )
 
+type Params struct {
+	Host                      iport.Host
+	IntervalMonitorConnection *time.Duration
+	Env                       *envo.Env
+	Ports                     iport.Ports
+	Logger                    logit.Logger
+}
+
 type Rdb struct {
 	redis.Client
 	intervalMonitorConnection *time.Duration
-	serviceName               port.ServiceName
+	host                      iport.Host
 	stopMonitor               chan struct{}
 	env                       *envo.Env
+	ports                     iport.Ports
 	logger                    logit.Logger
-}
-
-type Params struct {
-	ServiceName               port.ServiceName
-	IntervalMonitorConnection *time.Duration
-	Env                       *envo.Env
-	Logger                    logit.Logger
 }
 
 func NewRdb(params Params) *Rdb {
@@ -40,8 +42,9 @@ func NewRdb(params Params) *Rdb {
 
 	return &Rdb{
 		intervalMonitorConnection: intervalMonitorConnection,
-		serviceName:               params.ServiceName,
+		host:                      params.Host,
 		env:                       params.Env,
+		ports:                     params.Ports,
 		logger:                    params.Logger,
 	}
 }
@@ -65,7 +68,7 @@ func (r *Rdb) connect(ctx context.Context) error {
 	const op = "rdb.connect"
 	ctx = r.logger.NewOpCtx(ctx, op)
 
-	addr := port.FormatServiceTCP(r.env, r.serviceName)
+	addr := r.ports.FormatServiceTCP(r.host)
 	client := redis.NewClient(&redis.Options{
 		Addr: addr,
 		DB:   0,

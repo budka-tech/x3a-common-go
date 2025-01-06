@@ -1,3 +1,3 @@
 ```go
-go get github.com/budka-tech/x3a-common-go
+go get -u github.com/budka-tech/x3a-common-go
 ```
